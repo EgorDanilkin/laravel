@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,9 +23,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        dd('fff');
+        $id = $request->input('category_id');
+        $title = $request->input('category_title');
+        // Думал добавить здесь добавление категории через статический метод, но решил дождаться бд
+        return redirect()->route('admin::category::show');
     }
 
     /**
