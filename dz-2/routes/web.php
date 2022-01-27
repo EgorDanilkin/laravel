@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,3 +35,9 @@ Route::group([
     Route::get('/category/{title}', [\App\Http\Controllers\NewsCategoryController::class, 'index'])
         ->name('::category');
 });
+
+Route::get('/admin/category', [AdminCategoryController::class, 'index'])
+    ->name('admin::category::show');
+
+Route::post('/admin/category', [AdminCategoryController::class, 'create'])
+    ->name('admin::category::create');
