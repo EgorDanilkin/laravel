@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
+
 class News
 {
     private $news = [
@@ -38,37 +41,36 @@ class News
     ];
 
     /**
-     * @return \string[][]
+     * @return Collection
      */
-    public function getNews(): array
+    public function getNews(): Collection
     {
-        return $this->news;
+        return \DB::table('news')
+            ->select(['*'])
+            ->get();
     }
 
     /**
      * @param $id
-     * @return string[]
+     * @return Builder|null
      */
-    public function getNewsById($id):? array
+    public function getNewsById($id):? object
     {
-        foreach ($this->news as $news) {
-            if ($news['id'] === (int)$id) {
-                return $news;
-            }
-        }
-        return null;
+        return \DB::table('news')
+            ->select(['*'])
+            ->where('id', '=', $id)
+            ->first();
     }
 
-    public function getNewsByCategoryId($id): array
+    /**
+     * @param $id
+     * @return Collection
+     */
+    public function getNewsByCategoryId($id): Collection
     {
-        $foundNews = [];
-
-        foreach ($this->news as $news) {
-            if ($news['id'] === $id) {
-                $foundNews[] = $news;
-            }
-        }
-
-        return $foundNews;
+        return \DB::table('news')
+            ->select(['*'])
+            ->where('category_id', '=', $id)
+            ->get();
     }
 }

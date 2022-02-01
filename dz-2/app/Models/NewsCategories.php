@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
+
 class NewsCategories
 {
     private $categories = [
@@ -20,20 +23,23 @@ class NewsCategories
     ];
 
     /**
-     * @return \string[][]
+     * @return Collection
      */
-    public function getCategories(): array
+    public function getCategories(): Collection
     {
-        return $this->categories;
+        return \DB::table('categories')
+            ->select(['*'])
+            ->get();
     }
 
+    /**
+     * @param $title
+     * @return Collection|null
+     */
     public function getCategoryIdByTitle($title):? int
     {
-        foreach ($this->categories as $category) {
-            if ($category['title'] === $title) {
-                return $category['id'];
-            }
-        }
-        return null;
+        return \DB::table('categories')
+            ->where('title', '=', $title)
+            ->value('id');
     }
 }

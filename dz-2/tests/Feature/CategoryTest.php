@@ -20,7 +20,6 @@ class CategoryTest extends TestCase
         $response->assertStatus(200)
             ->assertSeeText('id')
             ->assertSeeText('Название категории')
-            ->assertViewIs('admin.category')
-        ->assertViewIs('admin.category');
+            ->assertViewIs('admin.category');
     }
 }

@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 
 class NewsCategoriesController extends Controller
 {
-    public function index()
+    public function index(NewsCategories $categories)
     {
-
-        $categories = new NewsCategories();
+        $categories = $categories->getCategories()->toArray();
 
         return view('сategories', [
-            'categories' => $categories->getCategories(),
+            'categories' => $categories,
         ]);
     }
 }

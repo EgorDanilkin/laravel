@@ -3,7 +3,9 @@
 @section('content')
     <ul>
     @foreach ($categories as $category)
-            <a href="{{ route('news::category', $category['title'])}}">{{ $category['title'] }}</a>
+        <li>
+            <a href="{{ route('news::category', $category->title)}}">{{ $category->title }}</a>
+        </li>
     @endforeach
     </ul>
 @endsection
