@@ -7,20 +7,6 @@ use Illuminate\Support\Collection;
 
 class NewsCategories
 {
-    private $categories = [
-        [
-            'id' => '1',
-            'title' => 'sport'
-        ],
-        [
-            'id' => '2',
-            'title' => 'show Business'
-        ],
-        [
-            'id' => '3',
-            'title' => 'politics'
-        ]
-    ];
 
     /**
      * @return Collection
