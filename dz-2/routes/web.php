@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,24 @@ Route::get('/admin/category', [AdminCategoryController::class, 'index'])
 
 Route::post('/admin/category', [AdminCategoryController::class, 'create'])
     ->name('admin::category::create');
+
+Route::get('/admin/news/', [AdminNewsController::class, 'index'])
+    ->name('admin::news');
+
+Route::get('/admin/news/create', [AdminNewsController::class, 'create'])
+    ->name('admin::news::create');
+
+Route::post('/admin/news/store', [AdminNewsController::class, 'store'])
+    ->name('admin::news::store');
+
+Route::get('/admin/news/edit/{news}', [AdminNewsController::class, 'edit'])
+    ->name('admin::news::edit');
+
+Route::post('/admin/news/update/{news}', [AdminNewsController::class, 'update'])
+    ->name('admin::news::update');
+
+Route::get('/admin/news/show/{news}', [AdminNewsController::class, 'show'])
+    ->name('admin::news::show');
+
+Route::get('/admin/news/destroy/{news}', [AdminNewsController::class, 'destroy'])
+    ->name('admin::news::destroy');

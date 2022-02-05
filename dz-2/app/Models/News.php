@@ -2,43 +2,33 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 
-class News
+class News extends Model
 {
 
-    /**
-     * @return Collection
-     */
-    public function getNews(): Collection
-    {
-        return \DB::table('news')
-            ->select(['*'])
-            ->get();
-    }
+    use HasFactory;
 
-    /**
-     * @param $id
-     * @return Builder|null
-     */
-    public function getNewsById($id):? object
-    {
-        return \DB::table('news')
-            ->select(['*'])
-            ->where('id', '=', $id)
-            ->first();
-    }
+    protected $fillable = [
+        'title',
+        'content',
+        'image',
+        'status_id',
+        'category_id',
+        'source_id',
+        'updated_at',
+    ];
 
     /**
      * @param $id
      * @return Collection
      */
-    public function getNewsByCategoryId($id): Collection
+    public static function getNewsByCategoryId($id): Collection
     {
-        return \DB::table('news')
-            ->select(['*'])
-            ->where('category_id', '=', $id)
+        return static::where('category_id', $id)
             ->get();
     }
 }

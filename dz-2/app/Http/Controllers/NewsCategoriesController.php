@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NewsCategories;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class NewsCategoriesController extends Controller
 {
-    public function index(NewsCategories $categories)
+    public function index()
     {
-        $categories = $categories->getCategories()->toArray();
+
+        $categories = Category::all();
 
         return view('сategories', [
             'categories' => $categories,
