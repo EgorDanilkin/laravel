@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
-    @forelse($news as $id => $item)
+    @forelse($news as $item)
         <div>
-            <a href="{{ route('news', $id + 1)}}">{{ $item['title'] }}</a>
+            <a href="{{ route('news', $item['id'])}}">{{ $item['title'] }}</a>
         </div>
     @empty
         В данной категории новостей нет

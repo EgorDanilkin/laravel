@@ -5,29 +5,34 @@ namespace App\Models;
 class News
 {
     private $news = [
-        1 => [
+        [
+            'id' => 1,
             'title' => 'title1 Sport',
-            'category' => 'sport',
+            'categoryId' => 1,
             'text' => 'some text',
         ],
-        2 => [
+        [
+            'id' => 2,
             'title' => 'title2 Sport',
-            'category' => 'sport',
+            'categoryId' => 1,
             'text' => 'some text',
         ],
-        3 => [
+        [
+            'id' => 3,
             'title' => 'title1 Show Business',
-            'category' => 'show Business',
+            'categoryId' => 2,
             'text' => 'some text',
         ],
-        4 => [
+        [
+            'id' => 4,
             'title' => 'title1 Politics',
-            'category' => 'politics',
+            'categoryId' => 3,
             'text' => 'some text',
         ],
-        5 => [
+        [
+            'id' => 5,
             'title' => 'title2 Politics',
-            'category' => 'politics',
+            'categoryId' => 3,
             'text' => 'some text',
         ],
     ];
@@ -44,21 +49,26 @@ class News
      * @param $id
      * @return string[]
      */
-    public function getNewsById($id): array
+    public function getNewsById($id):? array
     {
-        return $this->news[$id];
+        foreach ($this->news as $news) {
+            if ($news['id'] === (int)$id) {
+                return $news;
+            }
+        }
+        return null;
     }
 
-    public function getNewsByCategory($category): array
+    public function getNewsByCategoryId($id): array
     {
-        $news = [];
+        $foundNews = [];
 
-        for ($i = 1; $i < count($this->news) + 1; $i++) {
-            if ($this->news[$i]['category'] == $category) {
-                $news[] = $this->news[$i];
+        foreach ($this->news as $news) {
+            if ($news['id'] === $id) {
+                $foundNews[] = $news;
             }
         }
 
-        return $news;
+        return $foundNews;
     }
 }

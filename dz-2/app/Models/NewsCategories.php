@@ -5,13 +5,16 @@ namespace App\Models;
 class NewsCategories
 {
     private $categories = [
-        1 => [
+        [
+            'id' => '1',
             'title' => 'sport'
         ],
-        2 => [
+        [
+            'id' => '2',
             'title' => 'show Business'
         ],
-        3 => [
+        [
+            'id' => '3',
             'title' => 'politics'
         ]
     ];
@@ -22,5 +25,15 @@ class NewsCategories
     public function getCategories(): array
     {
         return $this->categories;
+    }
+
+    public function getCategoryIdByTitle($title):? int
+    {
+        foreach ($this->categories as $category) {
+            if ($category['title'] === $title) {
+                return $category['id'];
+            }
+        }
+        return null;
     }
 }
