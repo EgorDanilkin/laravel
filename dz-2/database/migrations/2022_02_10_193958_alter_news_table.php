@@ -13,7 +13,13 @@ class AlterNewsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('news', function (Blueprint $table) {
+            $table->bigInteger('status_id')
+                ->unsigned()
+                ->nullable(false)
+                ->default(1)
+                ->change();
+        });
     }
 
     /**

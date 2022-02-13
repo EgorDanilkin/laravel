@@ -11,10 +11,10 @@ class AdminNewsSaveRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return false;
-    }
+//    public function authorize()
+//    {
+//        return false;
+//    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +24,11 @@ class AdminNewsSaveRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|string|between:10,50',
+            'contents' => 'required|string|between:20,200',
+            'category_id' => 'required|integer|exists:categories,id',
+            'source_id' => 'integer|exists:sources,id',
+            'image' => 'file|image'
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\AdminNewsSaveRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
@@ -31,7 +32,6 @@ class NewsController extends Controller
      */
     public function create()
     {
-
         $sources = Source::getSourcesInAssocArray();
 
         $categories = Category::getCategoriesInAssocArray();
@@ -49,26 +49,14 @@ class NewsController extends Controller
      * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, News $news)
+    public function store(AdminNewsSaveRequest $request, News $news)
     {
 
-        $news->fill([
-            'title' => $request->title,
-            'content' => $request->contents,
-            'category_id' => $request->category,
-            'source_id' => $request->source,
-            'status_id' => 1,
-        ]);
-
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $news->fill([
-                'image' => $request->image->path()
-            ]);
-        }
-
+        $news->fill($request->all());
         $news->save();
 
-        return redirect()->route('admin::news::create');
+        return redirect()->route('admin::news::create')
+            ->with('success', "Данные сохранены");
     }
 
     /**
@@ -111,27 +99,14 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(AdminNewsSaveRequest $request, News $news)
     {
 
-        $news->fill([
-            'title' => $request->title,
-            'content' => $request->contents,
-            'category_id' => $request->category,
-            'source_id' => $request->source,
-            'status_id' => 1,
-            'updated_at' => time()
-        ]);
-
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $news->fill([
-                'image' => $request->image->path()
-            ]);
-        }
-
+        $news->fill($request->all());
         $news->save();
 
-        return redirect()->route('admin::news::edit', $news);
+        return redirect()->route('admin::news::edit', $news)
+            ->with('success', "Данные сохранены");;
     }
 
     /**

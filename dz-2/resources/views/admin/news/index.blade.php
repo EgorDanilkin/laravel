@@ -10,7 +10,7 @@
     </ul>
 
     {!! Form::open(['route' => ['admin::news::create'], 'method' => 'GET']) !!}
-    {!! Form::submit('Добавить новость') !!}
+    {!! Form::submit(__('labels.create')) !!}
     {!! Form::close() !!}
 
 @endsection
