@@ -15,7 +15,7 @@
             {{ session('success') }}
         </div>
     @endif
-    {!! Form::open(['route' => 'admin::profile::update']) !!}
+    {!! Form::open(['route' => ['admin::profile::update', $user]]) !!}
 
     {!! Form::label('name', 'Имя') !!}
     {!! Form::text('name', $user->name) !!}<br>

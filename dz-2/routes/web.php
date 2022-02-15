@@ -37,29 +37,68 @@ Route::group([
         ->name('::category');
 });
 
-Route::get('/admin/category', [AdminCategoryController::class, 'index'])
-    ->name('admin::category::show');
+Route::group([
+    'prefix' => '/admin',
+    'as' => 'admin::',
+//    'middleware' => 'auth'
+], function () {
 
-Route::post('/admin/category', [AdminCategoryController::class, 'create'])
-    ->name('admin::category::create');
+    Route::group([
+        'prefix' => '/category',
+        'as' => 'category'
+    ], function (){
 
-Route::get('/admin/news/', [AdminNewsController::class, 'index'])
-    ->name('admin::news');
+        Route::get('', [AdminCategoryController::class, 'index'])
+            ->name('::show');
 
-Route::get('/admin/news/create', [AdminNewsController::class, 'create'])
-    ->name('admin::news::create');
+        Route::post('', [AdminCategoryController::class, 'create'])
+            ->name('::create');
+    });
 
-Route::post('/admin/news/store', [AdminNewsController::class, 'store'])
-    ->name('admin::news::store');
+    Route::group([
+        'prefix' => '/news',
+        'as' => 'news'
+    ], function (){
 
-Route::get('/admin/news/edit/{news}', [AdminNewsController::class, 'edit'])
-    ->name('admin::news::edit');
+        Route::get('/', [AdminNewsController::class, 'index'])
+            ->name('');
 
-Route::post('/admin/news/update/{news}', [AdminNewsController::class, 'update'])
+        Route::get('/create', [AdminNewsController::class, 'create'])
+            ->name('::create');
+
+        Route::post('/store', [AdminNewsController::class, 'store'])
+            ->name('::store');
+
+        Route::get('/edit/{news}', [AdminNewsController::class, 'edit'])
+            ->name('::edit');
+
+//        Route::post('/update/{news}', [AdminNewsController::class, 'update'])
+//            ->name('::update');
+
+        Route::get('/show/{news}', [AdminNewsController::class, 'show'])
+            ->name('::show');
+
+        Route::get('/destroy/{news}', [AdminNewsController::class, 'destroy'])
+            ->name('::destroy');
+    });
+
+    Route::group([
+        'prefix' => 'profile',
+        'as' => 'profile'
+    ], function (){
+        Route::get('/', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])
+            ->name('');
+        Route::get('/show/{user}', [\App\Http\Controllers\Admin\ProfileController::class, 'show'])
+            ->name('::show');
+        Route::post('/update/{user}', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])
+            ->name('::update');
+    });
+
+});
+
+Route::post('admin/news/update/{news}', [AdminNewsController::class, 'update'])
     ->name('admin::news::update');
 
-Route::get('/admin/news/show/{news}', [AdminNewsController::class, 'show'])
-    ->name('admin::news::show');
+Auth::routes(['register' => false]);
 
-Route::get('/admin/news/destroy/{news}', [AdminNewsController::class, 'destroy'])
-    ->name('admin::news::destroy');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -101,12 +101,12 @@ class NewsController extends Controller
      */
     public function update(AdminNewsSaveRequest $request, News $news)
     {
-
+//dd($news, $request);
         $news->fill($request->all());
         $news->save();
 
         return redirect()->route('admin::news::edit', $news)
-            ->with('success', "Данные сохранены");;
+            ->with('success', "Данные сохранены");
     }
 
     /**

@@ -39,7 +39,6 @@ class NewsCreateTest extends DuskTestCase
                     ->type('contents', '1234567890qwertyuiop')
                     ->select('category_id', 3)
                     ->select('source_id', 4)
-                    ->select('source_id', 4)
                     ->press('Создать')
                     ->assertSee('Данные сохранены');
         });

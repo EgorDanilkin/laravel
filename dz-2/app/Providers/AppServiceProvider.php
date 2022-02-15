@@ -34,7 +34,15 @@ class AppServiceProvider extends ServiceProvider
             ],
             [
                 'title' => __('menu.admin'),
-                'alias' => 'admin::news'
+                [
+                    'title' => 'Новости',
+                    'alias' => 'admin::news'
+                ],
+                [
+                    'title' => 'Пользователи',
+                    'alias' => 'admin::profile'
+                ],
+
             ]
         ];
 
