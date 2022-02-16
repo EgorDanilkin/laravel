@@ -10,6 +10,7 @@
 <body>
     <header>
         @include('blocks.menu')
+
         <hr>
     </header>
     <main>

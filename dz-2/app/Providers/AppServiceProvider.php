@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -42,9 +43,14 @@ class AppServiceProvider extends ServiceProvider
                     'title' => 'Пользователи',
                     'alias' => 'admin::profile'
                 ],
-
-            ]
+            ],
+            [
+                'title' => __('menu.profile'),
+                'alias' => 'home'
+            ],
         ];
+
+
 
         \View::share('menu', $menu);
     }

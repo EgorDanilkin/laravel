@@ -20,8 +20,8 @@
     {!! Form::label('title', __('labels.title')) !!}
     {!! Form::text('title') !!}<br>
 
-    {!! Form::label('contents', __('labels.content')) !!}
-    {!! Form::textarea('contents') !!}<br>
+    {!! Form::label('content', __('labels.content')) !!}
+    {!! Form::textarea('content') !!}<br>
 
     {!! Form::label('category_id', __('labels.category')) !!}
     {!! Form::select('category_id', $categories) !!}<br>

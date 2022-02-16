@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,7 @@ Route::group([
 Route::group([
     'prefix' => '/admin',
     'as' => 'admin::',
-//    'middleware' => 'auth'
+    'middleware' => ['auth', 'admin']
 ], function () {
 
     Route::group([
@@ -72,8 +73,8 @@ Route::group([
         Route::get('/edit/{news}', [AdminNewsController::class, 'edit'])
             ->name('::edit');
 
-//        Route::post('/update/{news}', [AdminNewsController::class, 'update'])
-//            ->name('::update');
+        Route::post('/update/{news}', [AdminNewsController::class, 'update'])
+            ->name('::update');
 
         Route::get('/show/{news}', [AdminNewsController::class, 'show'])
             ->name('::show');
@@ -86,18 +87,29 @@ Route::group([
         'prefix' => 'profile',
         'as' => 'profile'
     ], function (){
-        Route::get('/', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])
+        Route::get('/', [AdminProfileController::class, 'index'])
             ->name('');
-        Route::get('/show/{user}', [\App\Http\Controllers\Admin\ProfileController::class, 'show'])
+
+        Route::get('/show/{user}', [AdminProfileController::class, 'show'])
             ->name('::show');
-        Route::post('/update/{user}', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])
+
+        Route::get('/create', [AdminProfileController::class, 'create'])
+            ->name('::create');
+
+        Route::post('/store', [AdminProfileController::class, 'store'])
+            ->name('::store');
+
+        Route::get('/edit/{user}', [AdminProfileController::class, 'edit'])
+            ->name('::edit');
+
+        Route::post('/update/{user}', [AdminProfileController::class, 'update'])
             ->name('::update');
+
+        Route::get('/destroy/{user}', [AdminProfileController::class, 'destroy'])
+            ->name('::destroy');
     });
 
 });
-
-Route::post('admin/news/update/{news}', [AdminNewsController::class, 'update'])
-    ->name('admin::news::update');
 
 Auth::routes(['register' => false]);
 

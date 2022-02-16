@@ -101,7 +101,6 @@ class NewsController extends Controller
      */
     public function update(AdminNewsSaveRequest $request, News $news)
     {
-//dd($news, $request);
         $news->fill($request->all());
         $news->save();
 
