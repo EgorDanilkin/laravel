@@ -3,10 +3,10 @@
 @section('content')
     {{ $news->title }}<br>
     {!! Form::open(['route' => ['admin::news::edit', $news], 'method' => 'GET']) !!}
-    {!! Form::submit('Изменить') !!}
+    {!! Form::submit(__('labels.edit')) !!}
     {!! Form::close() !!}
 
     {!! Form::open(['route' => ['admin::news::destroy', $news], 'method' => 'GET']) !!}
-    {!! Form::submit('Удалить') !!}
+    {!! Form::submit(__('labels.delete')) !!}
     {!! Form::close() !!}
 @endsection

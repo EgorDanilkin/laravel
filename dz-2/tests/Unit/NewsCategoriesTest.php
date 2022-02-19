@@ -14,6 +14,7 @@ class NewsCategoriesTest extends TestCase
      */
     public function test_example()
     {
+
         $model = new NewsCategoriesOld();
         $categories = $model->getCategories();
         $categoryId = $model->getCategoryIdByTitle('sport');
