@@ -9,6 +9,11 @@ class Source extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'url',
+    ];
+
     public static function getSourcesInAssocArray()
     {
         $categories = static::all();
