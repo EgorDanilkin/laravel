@@ -50,4 +50,32 @@ class User extends Authenticatable
 
         return empty(!$user);
     }
+
+    public static function loginInSocial($user, $social)
+    {
+        $userId = \DB::table('users_social')
+            ->select('user_id')
+            ->where($social . '_id', '=', $user->getId())
+            ->first();
+
+        $ownUser = null;
+
+        if (!is_null($userId)) {
+            $ownUser = User::find($userId->user_id);
+        } else {
+            $ownUser = new User();
+            $ownUser->fill([
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+            ])->save();
+
+            \DB::table('users_social')
+                ->insert([
+                    'user_id' => $ownUser->id,
+                    $social . '_id' => $user->getId(),
+                ]);
+        }
+
+        \Auth::login($ownUser);
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterNewsTable extends Migration
+class AlterUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class AlterNewsTable extends Migration
      */
     public function up()
     {
-        Schema::table('news', function (Blueprint $table) {
-            $table->bigInteger('status_id')
-                ->unsigned()
-                ->nullable(false)
-                ->default(1)
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('password')
+                ->nullable(true)
                 ->change();
         });
     }
@@ -29,9 +27,8 @@ class AlterNewsTable extends Migration
      */
     public function down()
     {
-        Schema::table('news', function (Blueprint $table) {
-            $table->bigInteger('status_id')
-                ->unsigned()
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('password')
                 ->nullable(false)
                 ->change();
         });

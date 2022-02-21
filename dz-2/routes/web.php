@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -26,7 +28,7 @@ Route::get('/auth', [\App\Http\Controllers\AuthController::class, 'index'])->nam
 Route::group([
     'prefix' => '/news',
     'as' => 'news',
-], function() {
+], function () {
     Route::get('/{id}', [\App\Http\Controllers\NewsController::class, 'index'])
         ->where('id', '[0-9]+')
         ->name('');
@@ -41,13 +43,13 @@ Route::group([
 Route::group([
     'prefix' => '/admin',
     'as' => 'admin::',
-    'middleware' => ['auth', 'admin']
+    'middleware' => ['auth', 'admin'],
 ], function () {
 
     Route::group([
         'prefix' => '/category',
-        'as' => 'category'
-    ], function (){
+        'as' => 'category',
+    ], function () {
 
         Route::get('', [AdminCategoryController::class, 'index'])
             ->name('::show');
@@ -58,8 +60,8 @@ Route::group([
 
     Route::group([
         'prefix' => '/news',
-        'as' => 'news'
-    ], function (){
+        'as' => 'news',
+    ], function () {
 
         Route::get('/', [AdminNewsController::class, 'index'])
             ->name('');
@@ -85,8 +87,8 @@ Route::group([
 
     Route::group([
         'prefix' => 'profile',
-        'as' => 'profile'
-    ], function (){
+        'as' => 'profile',
+    ], function () {
         Route::get('/', [AdminProfileController::class, 'index'])
             ->name('');
 
@@ -109,7 +111,40 @@ Route::group([
             ->name('::destroy');
     });
 
+    Route::get('/parser', [ParserController::class, 'index'])
+        ->name('parser');
+
 });
+
+Route::group([
+    'prefix' => 'social',
+    'as' => 'social::',
+], function () {
+
+    Route::group([
+        'prefix' => 'vk',
+        'as' => 'vk::',
+    ], function () {
+        Route::get('/login', [SocialController::class, 'loginVk'])
+            ->name('login');
+
+        Route::get('/response', [SocialController::class, 'responseVk'])
+            ->name('response');
+    });
+
+    Route::group([
+        'prefix' => 'facebook',
+        'as' => 'facebook::',
+    ], function () {
+        Route::get('/login', [SocialController::class, 'loginFacebook'])
+            ->name('login');
+
+        Route::get('/response', [SocialController::class, 'responseFacebook'])
+            ->name('response');
+    });
+});
+
+
 
 Auth::routes(['register' => false]);
 
