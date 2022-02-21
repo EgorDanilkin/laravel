@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
-use App\Models\NewsCategories;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class NewsCategoryController extends Controller
 {
-    public function index($title, News $news, NewsCategories $categories)
+    public function index($title)
     {
-        $categoryId = $categories->getCategoryIdByTitle($title);
-        $categoryNews = $news->getNewsByCategoryId($categoryId);
+
+        $categoryId = Category::getCategoryByTitle($title)->id;
+
+        $categoryNews = News::getNewsByCategoryId($categoryId);
 
         return view('category', ['news' => $categoryNews]);
     }

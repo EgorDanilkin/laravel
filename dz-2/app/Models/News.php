@@ -2,75 +2,33 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 
-class News
+class News extends Model
 {
-    private $news = [
-        [
-            'id' => 1,
-            'title' => 'title1 Sport',
-            'categoryId' => 1,
-            'text' => 'some text',
-        ],
-        [
-            'id' => 2,
-            'title' => 'title2 Sport',
-            'categoryId' => 1,
-            'text' => 'some text',
-        ],
-        [
-            'id' => 3,
-            'title' => 'title1 Show Business',
-            'categoryId' => 2,
-            'text' => 'some text',
-        ],
-        [
-            'id' => 4,
-            'title' => 'title1 Politics',
-            'categoryId' => 3,
-            'text' => 'some text',
-        ],
-        [
-            'id' => 5,
-            'title' => 'title2 Politics',
-            'categoryId' => 3,
-            'text' => 'some text',
-        ],
+
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'content',
+        'image',
+        'status_id',
+        'category_id',
+        'source_id',
+        'updated_at',
     ];
 
     /**
-     * @return Collection
-     */
-    public function getNews(): Collection
-    {
-        return \DB::table('news')
-            ->select(['*'])
-            ->get();
-    }
-
-    /**
-     * @param $id
-     * @return Builder|null
-     */
-    public function getNewsById($id):? object
-    {
-        return \DB::table('news')
-            ->select(['*'])
-            ->where('id', '=', $id)
-            ->first();
-    }
-
-    /**
      * @param $id
      * @return Collection
      */
-    public function getNewsByCategoryId($id): Collection
+    public static function getNewsByCategoryId($id): Collection
     {
-        return \DB::table('news')
-            ->select(['*'])
-            ->where('category_id', '=', $id)
+        return static::where('category_id', $id)
             ->get();
     }
 }

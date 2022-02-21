@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
             [
                 'title' => 'Категории',
                 'alias' => 'news::categories'
+            ],
+            [
+                'title' => 'Админка',
+                'alias' => 'admin::news'
             ]
         ];
 

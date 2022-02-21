@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Models\NewsCategories;
+use App\Models\NewsCategoriesOld;
 use PHPUnit\Framework\TestCase;
 
 class NewsCategoriesTest extends TestCase
@@ -14,7 +14,7 @@ class NewsCategoriesTest extends TestCase
      */
     public function test_example()
     {
-        $model = new NewsCategories();
+        $model = new NewsCategoriesOld();
         $categories = $model->getCategories();
         $categoryId = $model->getCategoryIdByTitle('sport');
 
