@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Services\NewsParser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,14 +14,16 @@ class NewsParsingJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $source;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($source)
     {
-        //
+        $this->source = $source;
     }
 
     /**
@@ -28,8 +31,8 @@ class NewsParsingJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(NewsParser $parser)
     {
-        //
+        $parser->run($this->source);
     }
 }
