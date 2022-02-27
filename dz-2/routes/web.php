@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,29 +38,79 @@ Route::group([
         ->name('::category');
 });
 
-Route::get('/admin/category', [AdminCategoryController::class, 'index'])
-    ->name('admin::category::show');
+Route::group([
+    'prefix' => '/admin',
+    'as' => 'admin::',
+    'middleware' => ['auth', 'admin']
+], function () {
 
-Route::post('/admin/category', [AdminCategoryController::class, 'create'])
-    ->name('admin::category::create');
+    Route::group([
+        'prefix' => '/category',
+        'as' => 'category'
+    ], function (){
 
-Route::get('/admin/news/', [AdminNewsController::class, 'index'])
-    ->name('admin::news');
+        Route::get('', [AdminCategoryController::class, 'index'])
+            ->name('::show');
 
-Route::get('/admin/news/create', [AdminNewsController::class, 'create'])
-    ->name('admin::news::create');
+        Route::post('', [AdminCategoryController::class, 'create'])
+            ->name('::create');
+    });
 
-Route::post('/admin/news/store', [AdminNewsController::class, 'store'])
-    ->name('admin::news::store');
+    Route::group([
+        'prefix' => '/news',
+        'as' => 'news'
+    ], function (){
 
-Route::get('/admin/news/edit/{news}', [AdminNewsController::class, 'edit'])
-    ->name('admin::news::edit');
+        Route::get('/', [AdminNewsController::class, 'index'])
+            ->name('');
 
-Route::post('/admin/news/update/{news}', [AdminNewsController::class, 'update'])
-    ->name('admin::news::update');
+        Route::get('/create', [AdminNewsController::class, 'create'])
+            ->name('::create');
 
-Route::get('/admin/news/show/{news}', [AdminNewsController::class, 'show'])
-    ->name('admin::news::show');
+        Route::post('/store', [AdminNewsController::class, 'store'])
+            ->name('::store');
 
-Route::get('/admin/news/destroy/{news}', [AdminNewsController::class, 'destroy'])
-    ->name('admin::news::destroy');
+        Route::get('/edit/{news}', [AdminNewsController::class, 'edit'])
+            ->name('::edit');
+
+        Route::post('/update/{news}', [AdminNewsController::class, 'update'])
+            ->name('::update');
+
+        Route::get('/show/{news}', [AdminNewsController::class, 'show'])
+            ->name('::show');
+
+        Route::get('/destroy/{news}', [AdminNewsController::class, 'destroy'])
+            ->name('::destroy');
+    });
+
+    Route::group([
+        'prefix' => 'profile',
+        'as' => 'profile'
+    ], function (){
+        Route::get('/', [AdminProfileController::class, 'index'])
+            ->name('');
+
+        Route::get('/show/{user}', [AdminProfileController::class, 'show'])
+            ->name('::show');
+
+        Route::get('/create', [AdminProfileController::class, 'create'])
+            ->name('::create');
+
+        Route::post('/store', [AdminProfileController::class, 'store'])
+            ->name('::store');
+
+        Route::get('/edit/{user}', [AdminProfileController::class, 'edit'])
+            ->name('::edit');
+
+        Route::post('/update/{user}', [AdminProfileController::class, 'update'])
+            ->name('::update');
+
+        Route::get('/destroy/{user}', [AdminProfileController::class, 'destroy'])
+            ->name('::destroy');
+    });
+
+});
+
+Auth::routes(['register' => false]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

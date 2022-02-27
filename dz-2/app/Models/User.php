@@ -41,4 +41,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function IsAdmin()
+    {
+        $user = \DB::table('admins')
+            ->where('user_id', '=', \Auth::user()->id)
+            ->first();
+
+        return empty(!$user);
+    }
 }
