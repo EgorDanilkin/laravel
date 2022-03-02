@@ -15,7 +15,7 @@ class Category extends Model
 
     public static function getCategoryByTitle(string $title)
     {
-        return static::where('title', $title)
+        return static::where('title', '=', $title)
             ->first();
     }
 
